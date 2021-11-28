@@ -1,25 +1,38 @@
-import Content from "./components/Content"
-import Footer from "./components/Footer"
-import Header from "./components/Header"
+import Header from "./components/Header";
+import Part from "./components/Part";
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const course = "Half Stack application development";
+  const parts = [
+    {
+      name: "Fundamentals of React",
+      exercises: 10,
+    },
+    {
+      name: "Using props to pass data",
+      exercises: 7,
+    },
+    {
+      name: "State of a component",
+      exercises: 14,
+    },
+  ];
+
+  const total = parts.reduce((total, current) => {
+    return total + current.exercises;
+  }, 0);
+
+  const listPart = parts.map((part) => (
+    <Part key={part.exercises} content={part.name} />
+  ));
 
   return (
     <div>
       <Header title={course} />
-      <Content part={part1} exercise={exercises1} />
-      <Content part={part2} exercise={exercises2} />
-      <Content part={part3} exercise={exercises3} />
-      <Footer sumExercise={exercises1 + exercises2 + exercises3}/>
+      {listPart}
+      <Part content={`total course = ${total}`} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
