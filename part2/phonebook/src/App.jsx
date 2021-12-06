@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Notification from './components/Notification';
 import person from './services/phonebook';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     person.getAll().then((response) => {
@@ -54,18 +56,31 @@ function App() {
 
       if (konfirm) {
         const newContact = { ...duplicate, number: newNumber };
-        person.updatePhoneBook(duplicate.id, newContact).then((response) => {
-          setPersons(
-            persons.map((person) =>
-              person.id === duplicate.id ? response : person
-            )
-          );
-        });
+        person
+          .updatePhoneBook(duplicate.id, newContact)
+          .then((response) => {
+            setPersons(
+              persons.map((person) =>
+                person.id === duplicate.id ? response : person
+              )
+            );
+          })
+          .catch((_) => {
+            setMessage(`${duplicate.name} already removed in the server`);
+            setTimeout(() => {
+              setMessage('');
+            }, 5000);
+            setPersons(persons.filter((person) => person.id !== duplicate.id));
+          });
       }
       return;
     }
     person.create(insertNewPerson).then((response) => {
       setPersons(persons.concat(response));
+      setMessage(`Added ${response.name}`);
+      setTimeout(() => {
+        setMessage('');
+      }, 5000);
     });
 
     setNewName('');
@@ -74,6 +89,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      {message !== '' && <Notification message={message} />}
       <div>
         filter shown with <input onChange={handleFilter} />
       </div>
