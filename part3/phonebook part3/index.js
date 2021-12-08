@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 3031;
@@ -27,6 +28,8 @@ let persons = [
     number: '39-23-6423122',
   },
 ];
+
+app.post('*', morgan('":method :url HTTP/:http-version" :status [:date[iso]]'));
 
 app.get('/info', (_, res) => {
   res.send(
