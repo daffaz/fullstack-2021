@@ -1,0 +1,14 @@
+GET http://localhost:3031/api/persons
+### DELETE
+DELETE http://localhost:3031/api/persons/4
+### GET INFO
+GET http://localhost:3031/info
+
+### CREATE NEW PERSON
+POST http://localhost:3031/api/persons/
+Content-Type: application/json
+
+{
+  "name": "Wawan",
+  "number": "192391-231321"
+}
