@@ -1,0 +1,12 @@
+GET http://localhost:3031/api/blogs
+
+### POST
+POST http://localhost:3031/api/blogs
+Content-Type: application/json
+
+{
+  "title": "the nice",
+  "author": "Wawan the 2nd",
+  "url": "wawan2nd.com",
+  "likes": 100
+}
