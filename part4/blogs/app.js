@@ -12,6 +12,8 @@ const blogsRouter = require('./controller/blogs')
 const middleware = require('./utils/middleware')
 // logger
 const logger = require('./utils/logger')
+// config
+const config = require('./utils/config')
 
 // cors
 app.use(cors())
@@ -19,7 +21,7 @@ app.use(cors())
 app.use(express.json())
 
 // connect to mongodb
-mongoose.connect(process.env.MONGODB_URI).then((result) => {
+mongoose.connect(config.MONGODB_URI).then((_) => {
   logger.info('connected to DB')
 })
 
